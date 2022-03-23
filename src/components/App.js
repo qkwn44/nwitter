@@ -8,12 +8,13 @@ function App() {
   //유저의 로그인 여부 파악
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(authService.currentUser);
+  const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     //사용자의 로그인 상태의 변화를 관찰하는 관찰자 추가, 이벤트리스너를 가지고 유저 상태에 변화가 있을 때 그 변화 감지
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user); //만약 authService가 바뀌면 user에 userObj넣기
       } else {
         setIsLoggedIn(false);
       }
@@ -25,7 +26,11 @@ function App() {
   return (
     <>
       {/* 만약 초기화 되면 router(login됨) or initalizing */}
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "initalizing..."}
+      {init ? (
+        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+      ) : (
+        "initalizing..."
+      )}
       <footer>&copy; {new Date().getFullYear()} Nwitter </footer>
     </>
   );
