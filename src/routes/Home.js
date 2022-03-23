@@ -1,7 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { dbService } from "../fbase";
+import Nweet from "components/Nweet";
 
 // export default () => <span>Home </span>;
 const Home = ({ userObj }) => {
@@ -23,6 +23,8 @@ const Home = ({ userObj }) => {
     });
   }, []);
   const onSubmit = async (event) => {
+    event.preventDefault();
+
     //submit 할때마다 document 생성하고    event.preventDefault();
     await dbService.collection("nweets").add({
       //document key
@@ -38,14 +40,11 @@ const Home = ({ userObj }) => {
       target: { value },
     } = event;
     setNweet(value);
-    // setNweet(event.target.value)
-    //event안에 있는 target안에 있는 value get.
   };
   return (
     <div>
       <form onSubmit={onSubmit}>
         <input
-          value={nweet}
           onChange={onChange}
           type="text"
           placeholder="What
@@ -55,9 +54,11 @@ const Home = ({ userObj }) => {
         <input type="submit" value="Nweet" />
       </form>
       {nweets.map((nweet) => (
-        <div key={nweet.id}>
-          <h4>{nweet.text}</h4>
-        </div>
+        <Nweet
+          key={nweet.id}
+          nweetObj={nweet}
+          isOwner={nweet.creatorId === userObj.uid}
+        />
       ))}
     </div>
   );
