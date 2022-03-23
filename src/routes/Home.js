@@ -56,7 +56,7 @@ const Home = ({ userObj }) => {
       {nweets.map((nweet) => (
         <Nweet
           key={nweet.id}
-          nweetObj={nweet}
+          nweetObj={nweet} //전체의 obj props로 nweet를 넘겨줌
           isOwner={nweet.creatorId === userObj.uid}
         />
       ))}
