@@ -1,3 +1,16 @@
+/*
+1. storage().ref().child() return  Reference - storage에 이미지 폴더 생성
+2. reference.putString() - 폴더에 이미지 넣는 작업
+
+attachmentRef를 이용해 파일 전체 경로를 참조해서
+Data URL 문자열을 파일에 추가시키는 작업을 함
+
+3. reference.putString() return - 완료 시 uploadTaskSnapshot을 받음
+4. UploadTaskSnapshot.ref.getDownloadURL() 
+  - ref속성을 통해 img의 reference에 접근 가능.
+  - 이미지가 저장된 스토리지 주소를 받을 수 있다
+*/
+
 import React from "react";
 import { useState, useEffect } from "react";
 import { dbService, storageService } from "../fbase";
@@ -5,7 +18,6 @@ import Nweet from "components/Nweet";
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-// export default () => <span>Home </span>;
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState(""); // form을 위한 state
   const [nweets, setNweets] = useState([]);
@@ -15,8 +27,6 @@ const Home = ({ userObj }) => {
   //component가 mount 될때 getNweets 실행
   useEffect(() => {
     dbService.collection("nweets").onSnapshot((snapshot) => {
-      //   console.log("something happen");
-      //   console.log(snapshot.docs);
       const nweetArray = snapshot.docs.map((doc) => ({
         //모든 doc은 object 반환
         id: doc.id,
@@ -31,7 +41,7 @@ const Home = ({ userObj }) => {
     if (attachment != "") {
       const attachmentRef = storageService
         .ref()
-        .child(`${userObj.uid}/${uuidv4()}`); // image path
+        .child(`${userObj.uid}/${uuidv4()}`); // imag path 얻기
       const response = await attachmentRef.putString(attachment, "data_url"); //data, data의 형식(attachment의 string = 이미지 전체) 필요
       attachmentUrl = await response.ref.getDownloadURL();
       //비어있는 string(attachmentUrl)은 storage에서 다운로드 받은 url로 업데이트
