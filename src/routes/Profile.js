@@ -7,7 +7,7 @@ import { useState } from "react";
 /*
 useObj prop로 넘겨받음
 */
-const Profile = ({ userObj }) => {
+const Profile = ({ refreshUser, userObj }) => {
   useEffect(() => {
     getMyNweets();
   }, [userObj]);
@@ -39,6 +39,7 @@ const Profile = ({ userObj }) => {
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
+      refreshUser();
     }
   };
 

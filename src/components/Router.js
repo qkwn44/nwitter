@@ -9,7 +9,7 @@ import Profile from "../routes/Profile";
 import Navigation from "./Navigation";
 
 //인증(로그인)여부에 따라 달라짐
-const AppRouter = ({ isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
   //전달받은 props
   return (
     <Router>
@@ -18,7 +18,10 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
         {isLoggedIn ? (
           <>
             <Route path="/" element={<Home userObj={userObj} />} />
-            <Route path="/profile" element={<Profile userObj={userObj} />} />
+            <Route
+              path="/profile"
+              element={<Profile userObj={userObj} refreshUser={refreshUser} />}
+            />
           </>
         ) : (
           <Route path="/" element={<Auth />} />
