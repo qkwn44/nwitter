@@ -8,10 +8,6 @@ import { useState } from "react";
 useObj prop로 넘겨받음
 */
 const Profile = ({ refreshUser, userObj }) => {
-  useEffect(() => {
-    getMyNweets();
-  }, [userObj]);
-
   const navigate = useNavigate();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogOutClick = () => {
@@ -42,6 +38,9 @@ const Profile = ({ refreshUser, userObj }) => {
       refreshUser();
     }
   };
+  useEffect(() => {
+    getMyNweets();
+  }, [userObj]);
 
   return (
     <>

@@ -17,6 +17,7 @@ function App() {
           updateProfile: (args) => user.updateProfile(args),
         }); //만약 authService가 바뀌면 user에 userObj넣기
       } else {
+        setUserObj(null);
       }
       setInit(true);
       //만약 init이 false라면 router를 숨기게 됨
