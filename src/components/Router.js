@@ -13,12 +13,12 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
   //전달받은 props
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Routes>
         {isLoggedIn ? (
           <>
             <Route path="/" element={<Home userObj={userObj} />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile userObj={userObj} />} />
           </>
         ) : (
           <Route path="/" element={<Auth />} />

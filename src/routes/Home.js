@@ -25,6 +25,7 @@ const Home = ({ userObj }) => {
         ...doc.data(),
       }));
       setNweets(nweetArray);
+      console.log(userObj);
     });
   }, []);
   const onSubmit = async (event) => {

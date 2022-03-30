@@ -9,10 +9,10 @@ const Nweet = ({ nweetObj, isOwner }) => {
   const onDeleteClick = async () => {
     const ok = window.confirm("R you sure want to delete this nweet?");
     if (ok) {
-      //url을 firebase의 method인 refFromURL에 넘긴다면 해당 object에 대한 reference에 접근할 수 있다
       //delete nweet
       await dbService.doc(`nweets/${nweetObj.id}`).delete();
       await storageService.refFromURL(nweetObj.attachmentUrl).delete();
+      //url을 firebase의 method인 refFromURL에 넘긴다면 해당 object에 대한 reference에 접근할 수 있다 stroage에서 완전 삭제
     }
   };
   const toggleEditig = () => setEditing((prev) => !prev);
