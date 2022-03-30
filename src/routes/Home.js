@@ -1,14 +1,6 @@
 /*
-1. storage().ref().child() return  Reference - storage에 이미지 폴더 생성
-2. reference.putString() - 폴더에 이미지 넣는 작업
-
-attachmentRef를 이용해 파일 전체 경로를 참조해서
-Data URL 문자열을 파일에 추가시키는 작업을 함
-
-3. reference.putString() return - 완료 시 uploadTaskSnapshot을 받음
-4. UploadTaskSnapshot.ref.getDownloadURL() 
-  - ref속성을 통해 img의 reference에 접근 가능.
-  - 이미지가 저장된 스토리지 주소를 받을 수 있다
+1. 만약 attachmentUrl을 firebase의 method인
+  refFromURL에 넘긴다면 해당 오브젝트에 대한 reference에 접근 할 수 있다.
 */
 
 import React from "react";
@@ -21,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState(""); // form을 위한 state
   const [nweets, setNweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
   //async사용하기 위해 개별함수 사용
 
   //component가 mount 될때 getNweets 실행
@@ -38,7 +30,7 @@ const Home = ({ userObj }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     let attachmentUrl = ""; //lexical scope 방지를 위해 if문 밖에 변수 선언 후 마지막에 대입
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = storageService
         .ref()
         .child(`${userObj.uid}/${uuidv4()}`); // imag path 얻기
@@ -56,6 +48,7 @@ const Home = ({ userObj }) => {
     //nweet는 attachmentUrl을 가짐
     setNweet("");
     setAttachment("");
+    fileInput.current.value = null;
     // 사진 업로드 -> 사진 있다면 사진의 url받아 nweet에 추가
   };
   const onChange = (event) => {
